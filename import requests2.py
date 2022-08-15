@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 from bs4 import BeautifulSoup
 
-r = requests.get ('https://www.myeform4.net/cazares/Admin/Reports/ReportCrRoster.aspx?ClassRoomID=3920')
+r = requests.get ('https://www.myeform4.net/cazares/Admin/Reports/ReportCrRoster.aspx?ClassRoomID=3937') # Parsing the HTML and setting student count
 soup= BeautifulSoup(r.text,'html.parser')
 student_count = soup.find_all('td', attrs={'class':'admin-content2'},align="left")
 student_count = len(student_count)
@@ -38,7 +38,7 @@ while i != student_count and i<10 :  # Stripping the HTML file and making each a
     i+=1
     print(i)
 
-while student_count>= 10 and i!= student_count:
+while student_count>= 10 and i!= student_count: # Workaround if the class is greater than 10
     StudentsName = soup.find('span',attrs={'id':'ctl00_ContentPlaceHolder1_gvRoster_ctl' + str (i) + '_lblName'}).text.replace("," , "  ")
     StudentsAdress = soup.find('span',attrs={'id':'ctl00_ContentPlaceHolder1_gvRoster_ctl' + str (i) + '_lbladdress'}).text
     StudentsEmail = soup.find('span',attrs={'id':'ctl00_ContentPlaceHolder1_gvRoster_ctl' + str(i) + '_lblEmail'}).text
