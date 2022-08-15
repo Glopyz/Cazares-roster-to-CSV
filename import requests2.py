@@ -7,15 +7,19 @@ r = requests.get ('https://www.myeform4.net/cazares/Admin/Reports/ReportCrRoster
 
 soup= BeautifulSoup(r.text,'html.parser')
 
-i=1
+student_count = soup.find('td', attrs={'class':'admin-content2'})
+student_count = len(student_count)
+print(student_count)
+
+i=2 # Setting this to 1 becuase it searches for number 2 on the HTML file
 StudentsNameArr = []
 StudentsAdressArr= []
 StudentsEmailArr = []
 StudentsCellphoneArr = []
 StudentsDOBArr = []
 
-while i !=4:
-    i+=1
+while i != student_count + 2:  # Stripping the HTML file and making each array by appending to it
+
     StudentsName = soup.find('span',attrs={'id':'ctl00_ContentPlaceHolder1_gvRoster_ctl0' + str (i) + '_lblName'}).text
     StudentsAdress = soup.find('span',attrs={'id':'ctl00_ContentPlaceHolder1_gvRoster_ctl0' + str (i) + '_lbladdress'}).text
     StudentsEmail = soup.find('span',attrs={'id':'ctl00_ContentPlaceHolder1_gvRoster_ctl0' + str(i) + '_lblEmail'}).text
@@ -28,39 +32,10 @@ while i !=4:
     StudentsCellphoneArr.append(StudentsCellphone)
     StudentsDOBArr.append(StudentsDOB)
 
+    i+=1
 
-    
-    
+  
 print(StudentsNameArr,"\n",StudentsAdressArr,"\n",StudentsEmailArr,"\n",StudentsCellphoneArr,"\n",StudentsDOBArr)
  
-
-#df = pd.DataFrame.from_dict(
-        # { 
-          #   'Name': [StudentsName],
-          #   'DOB': [StudentsDOB],
-           #  'Adress': [StudentsAdress],
-           #  'Email' : [StudentsEmail],
-            # 'Phone' : [StudentsCellphone]
-        # }
-    # )   
-#print(df)
-arrName = np.array ([StudentsNameArr,StudentsEmailArr,StudentsAdressArr,StudentsDOBArr,StudentsCellphoneArr])
-#arrName= list(arrName)
-#df = pd.DataFrame(arrName)
-
-print(arrName)
-np.savetxt("CazaresRoster.csv",arrName,fmt='%s', delimiter=",")
-
-#df.to_csv('CazaresRoster.csv') 
-
-
-
-# Loading a Sample Dataframe
-#df = pd.DataFrame.from_dict(
-   # {   'Name': ['Nik', 'Nik', 'Jane', 'Jane'],
-   #     'Year': [2020, 2021, 2020, 2021],
-   #     'Sales': [1000, 2300, 1900, 3400],
-   # }
-#)
-print()
-
+arrName = np.array ([StudentsNameArr,StudentsEmailArr,StudentsAdressArr,StudentsDOBArr,StudentsCellphoneArr]) # Making the Numpy Array structure
+np.savetxt("CazaresRoster.csv",arrName,fmt='%s', delimiter=",") # Saving the Array to the CSV file with some modifications
