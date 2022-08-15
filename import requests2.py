@@ -9,7 +9,7 @@ student_count = soup.find('td', attrs={'class':'admin-content2'})
 student_count = len(student_count)
 
 
-i=2 # Setting this to 1 becuase it searches for number 2 on the HTML file
+i=2 # Setting this to 2 becuase it searches for number 2 on the HTML file
 StudentsNameArr = []
 StudentsAdressArr= []
 StudentsEmailArr = []
